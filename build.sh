@@ -1,0 +1,1 @@
+pyinstaller -F src/main.py -p .venv/Lib/site-packages/

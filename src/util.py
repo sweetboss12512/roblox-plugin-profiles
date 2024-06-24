@@ -27,3 +27,10 @@ def get_plugin_file_name(plugin_name: str) -> str:
     else:
         return plugin_name
 
+def move_plugin(file_path: pathlib.Path, plugin_enabled: bool):
+    if plugin_enabled:
+        file_path.replace(config.PLUGIN_DIR / file_path.name)
+    else:
+        file_path.replace(config.UNUSED_PLUGIN_DIR / file_path.name)
+
+

@@ -1,6 +1,9 @@
 # Roblox Plugin Profiles
 Enable/disable plugins based on a "profile", the plugins are installed locally
-Roblox Studio place will have to close for the plugins
+
+Roblox Studio place will have to close for the plugins to load
+
+I made this because I was tired of enabling/disabling the same plugins over and over when i want to do something
 
 Example profile in `~/.config/rbx-profiles/profiles.toml`
 ```toml
@@ -34,7 +37,7 @@ jolemtools = true
 
 To install plugins provided in the file, use `rbx-profile install`
 
-To switch to a profile such as `wos`, use `rbx-profile profile use wos` ~~why is it so long~~
+To switch to a profile such as `wos`, use `rbx-profile use wos`
 
 `rbx-profile list` will list all your profiles and their descriptions if provided
 

@@ -2,13 +2,23 @@
 Enable/disable plugins based on a "profile", the plugins are installed locally
 Roblox Studio place will have to close for the plugins
 
-Example profile in `~/.config/rbx-profiles/profiles.toml`
+## Installation
+Build from source haha, does anyone actually need this?
+
+```bash
+git clone https://github.com/sweetboss12512/roblox-plugin-profiles.git rbx-plugin-profiles
+cd rbx-plugin-profiles
+./build.sh
+```
+The executable will be in dist/main.exe
+
+Example profiles in `~/.config/rbx-profiles/profiles.toml`
 ```toml
 [plugins]
 jolemtools = 7555657789
 mbtools = 6724254977
 mbreflect = 11973409942
-rojo = "RojoManagedPlugin" # The name of the file. This allows you to manage these plugins if they weren't installed from the asset ID. It assumes it's an rbxm
+rojo = "RojoManagedPlugin" # The name of the file. This allows you to manage these plugins if they weren't installed from the asset ID. It assumes it's an rbxm, currently
 
 [profiles.default]
 _desc = "Just silly things"
@@ -31,10 +41,15 @@ mbtools = false
 mbreflect = false
 jolemtools = true
 ```
+XDG variables will be used if they are set
 
 To install plugins provided in the file, use `rbx-profile install`
 
-To switch to a profile such as `wos`, use `rbx-profile profile use wos` ~~why is it so long~~
+To switch to a profile such as `wos`, use `rbx-profile use wos`
+
+To enable all managed plugins, use `rbx-profile use all`
+
+To disable all managed plugins, use `rbx-profile use none`
 
 `rbx-profile list` will list all your profiles and their descriptions if provided
 

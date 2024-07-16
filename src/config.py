@@ -3,35 +3,45 @@ import pathlib
 import tomllib
 import os
 
+_XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
+_XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME")
+
+CONFIG_DIR: pathlib.Path
+DATA_DIR: pathlib.Path
+
+if _XDG_CONFIG_HOME != None:
+    CONFIG_DIR = pathlib.Path(_XDG_CONFIG_HOME) / "rbx-profile"
+else:
+    CONFIG_DIR = pathlib.Path.home() / ".config/rbx-profile"
+
+if _XDG_DATA_HOME != None:
+    DATA_DIR = pathlib.Path(_XDG_DATA_HOME) / "rbx-profile"
+else:
+    DATA_DIR = pathlib.Path.home() / ".local/share/rbx-profile"
+
 CONFIG_NAME = "profiles.toml"
 CURRENT_DIRECTORY = pathlib.Path.cwd()
 PLUGIN_DIR = pathlib.Path.home() / r"AppData/Local/Roblox/Plugins"
-CONFIG_DIR = pathlib.Path(
-    os.environ.get("XDG_CONFIG_HOME") or pathlib.Path.home() / ".config/rbx-profile"
-)
-DATA_DIR = pathlib.Path(
-    os.environ.get("XDG_DATA_HOME") or pathlib.Path.home() / ".local/share/rbx-profile"
-)
+CONFIG_DIR: pathlib.Path
+DATA_DIR: pathlib.Path
 UNUSED_PLUGIN_DIR = (
     DATA_DIR / "disabled-plugins"
 )  # This is where 'disabled' plugins are put.
 GLOBAL_CONFIG = pathlib.Path(CONFIG_DIR / CONFIG_NAME)
 LOCAL_CONFIG = CURRENT_DIRECTORY / CONFIG_NAME
 
-
 @dataclass
 class _Config:
     plugins: dict[str, int | str] = field()
     profiles: dict[str, dict[str, bool]] = field()
 
-
 _config_dict: dict
 
 if LOCAL_CONFIG.is_file():
-    print("Using local config, ", LOCAL_CONFIG)
+    # print("Using local config, ", LOCAL_CONFIG)
     _config_dict = tomllib.loads(LOCAL_CONFIG.read_text())
 elif GLOBAL_CONFIG.is_file():
-    print("Using global config", GLOBAL_CONFIG)
+    # print("Using global config", GLOBAL_CONFIG)
     _config_dict = tomllib.loads(GLOBAL_CONFIG.read_text())
 else:
     print("Using default configuration")

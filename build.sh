@@ -4,4 +4,4 @@ if [ ! -d .venv ]; then
 fi
 
 source .venv/Scripts/activate
-pyinstaller -F src/main.py -p .venv/Lib/site-packages/
+pyinstaller -F src/main.py 

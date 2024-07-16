@@ -3,8 +3,9 @@ Enable/disable plugins based on a "profile", the plugins are installed locally
 Roblox Studio place will have to close for the plugins
 
 ## Installation
-Build from source haha, does anyone actually need this?
+The releases or something
 
+## Build from source
 ```bash
 git clone https://github.com/sweetboss12512/roblox-plugin-profiles.git rbx-plugin-profiles
 cd rbx-plugin-profiles

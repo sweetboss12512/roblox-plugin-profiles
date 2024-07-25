@@ -35,7 +35,7 @@ def managed():
     for plugin_name in extension_config.plugins.keys():
         plugin_name = get_plugin_file_name(plugin_name)
 
-        print(f"{plugin_name}: {get_plugin_path(plugin_name)}")
+        print(f"{plugin_name}: {get_plugin_path(plugin_name) or 'Not Found'}")
 
 @app.command()
 def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use")]):

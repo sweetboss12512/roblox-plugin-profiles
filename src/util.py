@@ -2,9 +2,12 @@ import config, pathlib
 from config import extension_config
 
 def get_plugin_path(plugin_name: str | pathlib.Path) -> pathlib.Path | None:
-    file_name = pathlib.Path(plugin_name).with_suffix(".rbxm")
+    file_name = pathlib.Path(plugin_name)
 
-    plugin_path = (config.UNUSED_PLUGIN_DIR / file_name)
+    if file_name.suffix == "":
+        file_name = file_name.with_suffix(".rbxm")
+
+    plugin_path = config.UNUSED_PLUGIN_DIR / file_name
 
     if not plugin_path.exists():
         # Search if it was moved the the plugins directory

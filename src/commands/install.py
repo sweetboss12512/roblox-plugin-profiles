@@ -8,14 +8,13 @@ from rich import print as rich_print
 from typing_extensions import Annotated
 from util import get_plugin_file_name, get_plugin_path, move_plugin
 
-# ASSET_DELIVERY_URL = "https://assetdelivery.roblox.com/v1/asset/?id=6724254977"
-
-def download_extension(asset_id: int, output_path: pathlib.Path):
+def download_plugin(asset_id: int, output_path: pathlib.Path):
     response = requests.get(f"https://assetdelivery.roblox.com/v1/asset/?id={asset_id}")
-    output_path.write_bytes(response.content)
 
-def clean_removed_extension():
-    pass
+    if not response.ok:
+        raise Exception(f"Failed to download plugin, GOT {response.status_code} {response.text}")
+
+    output_path.write_bytes(response.content)
 
 @app.command()
 def install():
@@ -27,7 +26,7 @@ def install():
             print(f"Plugin '{plugin_name}' is already installed")
         elif type(asset_id) == int:
             print(f"Installing plugin '{plugin_name}'")
-            download_extension(asset_id, output_path)
+            download_plugin(asset_id, output_path)
             print(f"'{plugin_name}' successfully installed")
 
 @app.command()
@@ -40,7 +39,7 @@ def managed():
 @app.command()
 def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use")]):
     '''
-        This moves disabled plugins to {dir}
+        This moves disabled plugins to $XDG_DATA_HOME(~/.config)/rbx-profile/disabled-plugins
     '''
 
     state_all = None

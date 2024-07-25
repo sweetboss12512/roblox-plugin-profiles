@@ -19,7 +19,7 @@ Example profiles in `~/.config/rbx-profiles/profiles.toml`
 jolemtools = 7555657789
 mbtools = 6724254977
 mbreflect = 11973409942
-rojo = "RojoManagedPlugin" # The name of the file. This allows you to manage these plugins if they weren't installed from the asset ID. It assumes it's an rbxm, currently
+rojo = "RojoManagedPlugin" # The name of the file. This allows you to manage these plugins if they weren't installed from the asset ID.
 
 [profiles.default]
 _desc = "Just silly things"

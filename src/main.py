@@ -1,5 +1,5 @@
 from cli import app
-import commands.install as _
+import commands.cli_main as _
 
 @app.command()
 def help():

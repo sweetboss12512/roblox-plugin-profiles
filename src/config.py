@@ -3,6 +3,8 @@ import pathlib
 import tomllib
 import os
 
+from requests.models import LocationParseError
+
 _XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
 _XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME")
 
@@ -34,15 +36,18 @@ LOCAL_CONFIG = CURRENT_DIRECTORY / CONFIG_NAME
 class _Config:
     plugins: dict[str, int | str] = field()
     profiles: dict[str, dict[str, bool]] = field()
+    config_file: pathlib.Path
 
 _config_dict: dict
 
 if LOCAL_CONFIG.is_file():
     # print("Using local config, ", LOCAL_CONFIG)
     _config_dict = tomllib.loads(LOCAL_CONFIG.read_text())
+    _config_dict["config_file"] = LOCAL_CONFIG
 elif GLOBAL_CONFIG.is_file():
     # print("Using global config", GLOBAL_CONFIG)
     _config_dict = tomllib.loads(GLOBAL_CONFIG.read_text())
+    _config_dict["config_file"] = GLOBAL_CONFIG
 else:
     print("Using default configuration")
     _config_dict = {"plugins": {}, "profiles": {}}
@@ -55,6 +60,6 @@ extension_config = _Config(**_config_dict)  # IDK why it's called this...
 if __name__ == "__main__":
     from rich import print
 
-    # print(extension_config)
+    print(extension_config)
     print(CONFIG_DIR)
     print(DATA_DIR)

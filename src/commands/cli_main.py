@@ -37,6 +37,28 @@ def managed():
         print(f"{plugin_name}: {get_plugin_path(plugin_name) or 'Not Found'}")
 
 @app.command()
+def info():
+    managed_plugins = 0
+    not_found_plugins = 0
+
+    for plugin_name in extension_config.plugins.keys():
+        file_path = get_plugin_path(get_plugin_file_name(plugin_name))
+
+        if file_path:
+            managed_plugins += 1
+        else:
+            not_found_plugins += 1
+
+    # This sucks.
+    print("Paths:")
+    print(f"\tCurrent config file: {extension_config.config_file}\n")
+
+    print("Plugins:")
+    print(f"\t{managed_plugins} managed plugins")
+    print(f"\t{not_found_plugins} not installed or not found")
+            
+
+@app.command()
 def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use")]):
     '''
         This moves disabled plugins to $XDG_DATA_HOME(~/.config)/rbx-profile/disabled-plugins

@@ -19,28 +19,20 @@ Example profiles in `~/.config/rbx-profiles/profiles.toml`
 jolemtools = 7555657789
 mbtools = 6724254977
 mbreflect = 11973409942
-rojo = "RojoManagedPlugin" # The name of the file. This allows you to manage these plugins if they weren't installed from the asset ID.
-
-[profiles.default]
-_desc = "Just silly things"
-rojo = true
-jolemtools = false
-mbtools = false
-mbreflect = false
+rojo = "RojoManagedPlugin"
 
 [profiles.wos]
 _desc = "Waste of space model building"
-mbtools = true
-jolemtools = false
-rojo = false
-mbreflect = true
+enabled = [
+    "mbtools",
+    "mbreflect",
+]
 
 [profiles.ss]
 _desc = "Scarlet skies building"
-rojo = false
-mbtools = false
-mbreflect = false
-jolemtools = true
+enabled = [
+    "jolemtools"
+]
 ```
 XDG variables will be used if they are set
 

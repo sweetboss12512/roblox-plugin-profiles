@@ -11,7 +11,7 @@ git clone https://github.com/sweetboss12512/roblox-plugin-profiles.git rbx-plugi
 cd rbx-plugin-profiles
 ./build.sh
 ```
-The executable will be in dist/main.exe
+The executable will be in dist/rbx-profile.exe
 
 Example profiles in `~/.config/rbx-profiles/profiles.toml`
 ```toml

@@ -3,8 +3,6 @@ import pathlib
 import tomllib
 import os
 
-from requests.models import LocationParseError
-
 _XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
 _XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME")
 
@@ -35,7 +33,7 @@ LOCAL_CONFIG = CURRENT_DIRECTORY / CONFIG_NAME
 @dataclass
 class _Config:
     plugins: dict[str, int | str] = field()
-    profiles: dict[str, dict[str, bool]] = field()
+    profiles: dict = field()
     config_file: pathlib.Path
 
 _config_dict: dict

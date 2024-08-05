@@ -1,8 +1,8 @@
 import config, pathlib
 from config import extension_config
 
-def get_plugin_path(plugin_name: str | pathlib.Path) -> pathlib.Path | None:
-    file_name = pathlib.Path(plugin_name)
+def get_plugin_path(plugin_file_name: str | pathlib.Path) -> pathlib.Path | None:
+    file_name = pathlib.Path(plugin_file_name)
 
     if file_name.suffix == "":
         file_name = file_name.with_suffix(".rbxm")
@@ -23,6 +23,10 @@ def get_plugin_file_name(plugin_name: str) -> str:
         This **NEEDS** a better name.
         The assetID can be a string which is the name of the file...
         This checks that and returns the file name if it's a string
+
+        ## Example:
+        mbtools = "Tools.rbxm"
+        This returns `Tools.rbxm` from `mbtools`
     '''
     value = extension_config.plugins[plugin_name]
     if type(value) == str:

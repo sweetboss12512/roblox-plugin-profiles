@@ -4,4 +4,4 @@ if [ ! -d .venv ]; then
 fi
 
 source .venv/Scripts/activate
-pyinstaller -F src/main.py 
+pyinstaller -F src/main.py -n rbx-profile.exe

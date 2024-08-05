@@ -25,7 +25,7 @@ def install():
         if get_plugin_path(plugin_name) != None:
             print(f"Plugin '{plugin_name}' is already installed")
         elif type(asset_id) == int:
-            print(f"Installing plugin '{plugin_name}'")
+            print(f"Installing plugin '{plugin_name}'...")
             download_plugin(asset_id, output_path)
             print(f"'{plugin_name}' successfully installed")
 
@@ -59,7 +59,7 @@ def info():
             
 
 @app.command()
-def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use")]):
+def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use. Profiles 'all' and 'none' are reserved, and using them will enable or disable all plugins.")]):
     '''
         This moves disabled plugins to $XDG_DATA_HOME(~/.config)/rbx-profile/disabled-plugins
     '''
@@ -76,7 +76,7 @@ def use(profile_name: Annotated[str, typer.Argument(help="The profile you want t
             path = get_plugin_path(get_plugin_file_name(plugin_name))
 
             if not path:
-                print(plugin_name)
+                print(f"Failed to get path of plugin '{plugin_name}'")
                 continue
 
             move_plugin(path, state_all)
@@ -84,27 +84,23 @@ def use(profile_name: Annotated[str, typer.Argument(help="The profile you want t
         typer.Exit()
         return
 
-    info = extension_config.profiles.get(profile_name)
+    profile = extension_config.profiles.get(profile_name)
 
-    if info == None:
+    if profile == None:
         print(f"Profile '{profile_name}' is not defined")
         typer.Exit(1)
         return
+
+    for plugin_name in extension_config.plugins.keys():
+        enabled = plugin_name in profile["enabled"]
+        file_path = get_plugin_path(get_plugin_file_name(plugin_name))
     
-    for plugin_name, plugin_enabled in info.items():
-        if plugin_name.startswith("_"): # These values aren't plugins, like profile description
+        if not file_path:
+            print(f"Plugin '{plugin_name}' was not found locally")
             continue
 
-        file_name = pathlib.Path(get_plugin_file_name(plugin_name)).with_suffix(".rbxm")
-        plugin_path = get_plugin_path(file_name)
-
-        if plugin_path == None:
-            print(f"Plugin '{plugin_name}' was not found locally.")
-            typer.Exit()
-            return
-        
-        move_plugin(plugin_path, plugin_enabled)
-
+        move_plugin(file_path, enabled)
+    
 @app.command()
 def list():
     print("Profiles:")

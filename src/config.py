@@ -3,6 +3,8 @@ import pathlib
 import tomllib
 import os
 
+VERSION = "v1.1.0"
+
 _XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
 _XDG_DATA_HOME = os.environ.get("XDG_DATA_HOME")
 

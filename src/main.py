@@ -1,9 +1,11 @@
 from cli import app
 import commands.cli_main as _
+import config
 
+# This sucks
 @app.command()
-def help():
-    pass
+def version():
+    print(f"rbx-profile", config.VERSION)
 
 if __name__ == "__main__":
     app()

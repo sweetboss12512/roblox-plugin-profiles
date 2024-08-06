@@ -21,15 +21,20 @@ mbtools = 6724254977
 mbreflect = 11973409942
 rojo = "RojoManagedPlugin"
 
+[profiles.default]
+enabled = [
+    "rojo"
+]
+
 [profiles.wos]
-_desc = "Waste of space model building"
+description = "Waste of space model building"
 enabled = [
     "mbtools",
     "mbreflect",
 ]
 
 [profiles.ss]
-_desc = "Scarlet skies building"
+description = "Scarlet skies building"
 enabled = [
     "jolemtools"
 ]

@@ -18,6 +18,9 @@ def download_plugin(asset_id: int, output_path: pathlib.Path):
 
 @app.command()
 def install():
+    '''
+    Downloads plugins defined in `profiles.toml`
+    '''
     for plugin_name, asset_id in extension_config.plugins.items():
         plugin_name = get_plugin_file_name(plugin_name)
         output_path = config.UNUSED_PLUGIN_DIR / f"{plugin_name}.rbxm"
@@ -55,13 +58,13 @@ def info():
 
     print("Plugins:")
     print(f"\t{managed_plugins} managed plugins")
-    print(f"\t{not_found_plugins} not installed or not found")
+    print(f"\t{not_found_plugins} not installed or not found (use 'rbx-profile managed' to see more)")
             
-
 @app.command()
 def use(profile_name: Annotated[str, typer.Argument(help="The profile you want to use. Profiles 'all' and 'none' are reserved, and using them will enable or disable all plugins.")]):
     '''
-        This moves disabled plugins to $XDG_DATA_HOME(~/.config)/rbx-profile/disabled-plugins
+        Moves plugins to a different directory to disable them 
+        (~/.config/rbx-profile/disabled-plugins)
     '''
 
     state_all = None
@@ -103,10 +106,13 @@ def use(profile_name: Annotated[str, typer.Argument(help="The profile you want t
     
 @app.command()
 def list():
+    '''
+    Lists all profiles and their descriptions (if any)
+    '''
     print("Profiles:")
 
     for name, info in extension_config.profiles.items():
-        description = info.get("_desc")
+        description = info.get("description")
 
         if description:
             description = f"[bold]# {description}[/bold]"

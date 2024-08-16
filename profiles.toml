@@ -1,8 +1,9 @@
 [plugins]
-jolemtools = 7555657789
+# jolemtools = 7555657789
 mbtools = 6724254977
-mbreflect = 11973409942
-rojo = "RojoManagedPlugin"
+# fail = 1
+# mbreflect = 11973409942
+# rojo = "RojoManagedPlugin"
 
 [profiles.default]
 enabled = [
@@ -13,7 +14,7 @@ enabled = [
 description = "Waste of space model building"
 enabled = [
     "mbtools",
-    "mbreflect",
+    # "mbreflect",
 ]
 
 [profiles.ss]

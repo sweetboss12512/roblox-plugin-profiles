@@ -1,0 +1,6 @@
+[submodule "vendor/lune-utils"]
+	path = vendor/lune-utils
+	url = https://github.com/latte-soft/lune-utils.git
+[submodule "vendor/lune-path"]
+	path = vendor/lune-path
+	url = https://github.com/jiwonz/lune-path-fs.git

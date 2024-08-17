@@ -21,9 +21,10 @@ else
 end
 
 local CONFIG_NAME = "profiles.toml"
-local UNUSED_PLUGIN_DIR = DATA_DIR:join("disabled-plugins")
+local DISABLED_PLUGIN_DIR = DATA_DIR:join("disabled-plugins")
 local LOCAL_CONFIG = CURRENT_DIRECTORY:join(CONFIG_NAME)
 local GLOBAL_CONFIG = CONFIG_DIR:join(CONFIG_NAME)
+local PLUGIN_DIR = pathfs.Path.from(`{process.env["HOME"]}/AppData/Local/Roblox/Plugins`)
 
 type ProfileData = {
 	plugins: { [string]: string | number },
@@ -46,15 +47,15 @@ else
 	configFile = GLOBAL_CONFIG
 end
 
-pathfs.writeDir(UNUSED_PLUGIN_DIR)
+pathfs.writeDir(DISABLED_PLUGIN_DIR)
 pathfs.writeDir(DATA_DIR)
 pathfs.writeDir(CONFIG_DIR)
 
 local config = {
 	directories = {
 		config = CONFIG_DIR,
-		data = DATA_DIR,
-		unusedPlugins = UNUSED_PLUGIN_DIR,
+		disabledPlugins = DISABLED_PLUGIN_DIR,
+		enabledPlugins = PLUGIN_DIR,
 	},
 	profileData = profileData,
 	configFile = configFile,

@@ -1,9 +1,10 @@
 local net = require("@lune/net")
 local stdio = require("@lune/stdio")
-local fs = require("@lune/fs")
 
 local Log = require("@vendor/lune-utils").Log
 local config = require("@src/config")
+local util = require("./util")
+local pathfs = require("@vendor/lune-path")
 
 return function()
 	for pluginName, assetId in config.profileData.plugins do
@@ -11,13 +12,12 @@ return function()
 			continue
 		end
 
-		local outputPath = `{config.directories.unusedPlugins}/{pluginName}.rbxm`
-
-		if fs.isFile(outputPath) then
+		if util.getPluginFilePath(pluginName) then
 			print(`'{pluginName}' is already installed, skipping`)
 			continue
 		end
 
+		local outputPath = pathfs.Path.from(`{config.directories.disabledPlugins}/{pluginName}.rbxm`)
 		local response = net.request({
 			url = `https://assetdelivery.roblox.com/v1/asset/?id={assetId}`,
 			method = "GET",
@@ -28,10 +28,10 @@ return function()
 			continue
 		end
 
-		fs.writeFile(outputPath, response.body)
+		pathfs.writeFile(outputPath, response.body)
 		stdio.write(`Installed plugin {pluginName}.rbxm\n`)
 
-		stdio.color("green")
+		stdio.write(stdio.color("green"))
 		stdio.write("Finished installing plugins\n")
 		stdio.write(stdio.color("reset"))
 	end

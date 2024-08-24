@@ -4,18 +4,35 @@ local Log = require("@vendor/log")
 local config = require("@src/config")
 local util = require("./util")
 
-return function(profileName)
+return function(arguments: util.ParsedArguments)
+	local stateAll = nil
+	local profileName: "all" | "none" | string = arguments.arguments[1]
+
+	if profileName == "all" then
+		stateAll = true
+	elseif profileName == "none" then
+		stateAll = false
+	end
+
 	local profile = config.profileData.profiles[profileName]
 
-	if not profile then
+	if not profile and stateAll == nil then
 		Log.Error(`Invalid profile '{profileName}'`)
+		return
 	end
 
 	local enabledPlugins = {}
 	local disabledPlugins = {}
 
 	for pluginName in config.profileData.plugins do
-		local pluginEnabled = table.find(profile.enabled, pluginName) ~= nil
+		local pluginEnabled: boolean
+
+		if stateAll ~= nil then
+			pluginEnabled = stateAll
+		else
+			pluginEnabled = table.find((profile :: any).enabled, pluginName) ~= nil
+		end
+
 		local success, message = util.setPluginEnabled(pluginName, pluginEnabled)
 
 		if not success then
@@ -24,10 +41,8 @@ return function(profileName)
 		end
 
 		if pluginEnabled then
-			-- print(`Enabled plugin '{pluginName}'`)
 			table.insert(enabledPlugins, pluginName)
 		else
-			-- print(`Disabled plugin '{pluginName}'`)
 			table.insert(disabledPlugins, pluginName)
 		end
 	end

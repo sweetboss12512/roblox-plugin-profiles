@@ -1,10 +1,8 @@
-local net = require("@lune/net")
 local stdio = require("@lune/stdio")
 
 local Log = require("@vendor/log")
 local config = require("@src/config")
 local util = require("./util")
-local pathfs = require("@vendor/lune-path")
 
 return function()
 	for pluginName, assetId in config.profileData.plugins do
@@ -17,22 +15,17 @@ return function()
 			continue
 		end
 
-		local outputPath = pathfs.Path.from(`{config.directories.disabledPlugins}/{pluginName}.rbxm`)
-		local response = net.request({
-			url = `https://assetdelivery.roblox.com/v1/asset/?id={assetId}`,
-			method = "GET",
-		})
+		local success, response = util.installPlugin(assetId, pluginName)
 
-		if not response.ok then
+		if not success then
 			Log.Error(`Failed to install plugin '{pluginName}', GOT {response.statusCode}, {response.statusMessage}`)
 			continue
 		end
 
-		pathfs.writeFile(outputPath, response.body)
-		stdio.write(`Installed plugin {pluginName}.rbxm\n`)
-
-		stdio.write(stdio.color("green"))
-		stdio.write("Finished installing plugins\n")
-		stdio.write(stdio.color("reset"))
+		print(`{pluginName} [{stdio.color("green")}Installed{stdio.color("reset")}]`)
 	end
+
+	stdio.write(stdio.color("green"))
+	stdio.write("\nFinished installing plugins!\n")
+	stdio.write(stdio.color("reset"))
 end

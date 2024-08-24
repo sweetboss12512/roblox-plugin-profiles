@@ -1,6 +1,16 @@
+local net = require("@lune/net")
+
 local pathfs = require("@vendor/lune-path")
 local config = require("@src/config")
 
+local utility = {}
+
+export type ParsedArguments = {
+	arguments: { any },
+	options: { [string]: any },
+}
+
+-- This is annoying
 local function attemptMove(path: pathfs.Path | string, newPath: pathfs.Path | string)
 	if tostring(path) ~= tostring(newPath) then
 		pathfs.move(path, newPath)
@@ -10,7 +20,7 @@ end
 --[[
     @return with a file extension, too.
 ]]
-local function getPluginFileName(pluginIndex: string): pathfs.Path
+function getPluginFileName(pluginIndex: string): pathfs.Path
 	local pluginValue = config.profileData.plugins[pluginIndex]
 	local fileName: pathfs.Path
 
@@ -27,7 +37,7 @@ local function getPluginFileName(pluginIndex: string): pathfs.Path
 	return fileName
 end
 
-local function getPluginFilePath(pluginIndex: string): pathfs.Path?
+function utility.getPluginFilePath(pluginIndex: string): pathfs.Path?
 	local fileName = getPluginFileName(pluginIndex)
 
 	if not fileName:extension() then
@@ -47,9 +57,9 @@ local function getPluginFilePath(pluginIndex: string): pathfs.Path?
 	return
 end
 
-local function setPluginEnabled(pluginIndex: string, enabled: boolean): (boolean, string?)
+function utility.setPluginEnabled(pluginIndex: string, enabled: boolean): (boolean, string?)
 	local fileName = getPluginFileName(pluginIndex)
-	local filePath = getPluginFilePath(pluginIndex)
+	local filePath = utility.getPluginFilePath(pluginIndex)
 
 	if not filePath then
 		return false, `Failed to find file for '{pluginIndex}'`
@@ -64,7 +74,66 @@ local function setPluginEnabled(pluginIndex: string, enabled: boolean): (boolean
 	return true
 end
 
-return {
-	setPluginEnabled = setPluginEnabled,
-	getPluginFilePath = getPluginFilePath,
-}
+-- https://github.com/ArvidSilverlock/Pilot.lua-Luau-LSP/blob/refactor/.lune/generate/modules/Utility.luau#L105
+function utility.parseArguments(arguments: { string }, ...: string)
+	local argumentedOptions = {}
+	for index = 1, select("#", ...) do
+		argumentedOptions[select(index, ...)] = true
+	end
+
+	local options: ParsedArguments = {
+		arguments = {},
+		options = {},
+	}
+
+	local index = 1
+	while index <= #arguments do
+		local argument = arguments[index]
+
+		if argument:sub(1, 2) == "--" then
+			local longOption = argument:sub(3)
+			local option, value = longOption:match("^(.*)=(.*)$")
+			if option and value then
+				options.options[option] = value
+			else
+				options.options[longOption] = true
+			end
+		elseif argument:sub(1, 1) == "-" then
+			local shortOptions = argument:sub(2)
+			for shortOptionIndex = 1, #shortOptions do
+				local option = shortOptions:sub(shortOptionIndex, shortOptionIndex)
+
+				if argumentedOptions[option] then
+					index += 1
+					options.options[option] = arguments[index]
+				else
+					options.options[option] = true
+				end
+			end
+		else
+			table.insert(options.arguments, argument)
+		end
+
+		index += 1
+	end
+
+	return options
+end
+
+function utility.installPlugin(assetId: number, fileName: string): (boolean, net.FetchResponse)
+	local response = net.request({
+		url = `https://assetdelivery.roblox.com/v1/asset/?id={assetId}`,
+		method = "GET",
+	})
+
+	local outputPath = pathfs.Path.from(`{config.directories.disabledPlugins}/{fileName}.rbxm`)
+
+	if not response.ok then
+		return false, response
+	end
+
+	pathfs.writeFile(outputPath, response.body)
+	return true, response
+end
+
+return utility

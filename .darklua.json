@@ -1,0 +1,15 @@
+{
+    "bundle": {
+        "excludes": [
+            "@lune/**"
+        ],
+        "require_mode": {
+            "module_folder_name": "init",
+            "name": "path",
+            "sources": {
+                "@vendor": "vendor/",
+                "@src": "lune/"
+            }
+        }
+    }
+}

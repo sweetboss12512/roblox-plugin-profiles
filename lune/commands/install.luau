@@ -1,7 +1,7 @@
 local net = require("@lune/net")
 local stdio = require("@lune/stdio")
 
-local Log = require("@vendor/lune-utils").Log
+local Log = require("@vendor/log")
 local config = require("@src/config")
 local util = require("./util")
 local pathfs = require("@vendor/lune-path")

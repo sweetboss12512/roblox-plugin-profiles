@@ -2,10 +2,6 @@ local process = require("@lune/process")
 
 local VERSION = "v1.2.0"
 
--- local ParseArgs = require("@vendor/lune-utils").ParseArgs
--- local config = require("./config")
--- print(config)
-
 local commands = {
 	install = require("./commands/install"),
 	list = require("./commands/list"),

@@ -1,5 +1,5 @@
 local process = require("@lune/process")
-local util = require("commands/util")
+local util = require("./commands/util")
 
 local VERSION = "v1.2.0"
 

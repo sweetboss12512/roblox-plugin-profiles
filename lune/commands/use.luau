@@ -33,17 +33,23 @@ return function(arguments: util.ParsedArguments)
 			pluginEnabled = table.find((profile :: any).enabled, pluginName) ~= nil
 		end
 
-		local success, message = util.setPluginEnabled(pluginName, pluginEnabled)
+		local oldPath = util.getPluginFilePath(pluginName)
 
-		if not success then
-			Log.Error(message :: any)
+		if not oldPath then
+			Log.Error(`Failed to find file for '{pluginName}'`)
 			continue
 		end
 
-		if pluginEnabled then
-			table.insert(enabledPlugins, pluginName)
-		else
-			table.insert(disabledPlugins, pluginName)
+		util.setPluginEnabled(pluginName, pluginEnabled)
+		local newPath = util.getPluginFilePath(pluginName) :: any
+		local isSamePath = oldPath:parent():equal(newPath:parent())
+
+		if not isSamePath then
+			if pluginEnabled then
+				table.insert(enabledPlugins, pluginName)
+			else
+				table.insert(disabledPlugins, pluginName)
+			end
 		end
 	end
 

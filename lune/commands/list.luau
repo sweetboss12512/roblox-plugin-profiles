@@ -1,6 +1,6 @@
 local stdio = require("@lune/stdio")
 local config = require("@src/config")
-local util = require("util")
+local util = require("./util")
 
 local function listProfiles()
 	print("Profiles:")

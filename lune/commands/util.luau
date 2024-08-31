@@ -57,12 +57,12 @@ function utility.getPluginFilePath(pluginIndex: string): pathfs.Path?
 	return
 end
 
-function utility.setPluginEnabled(pluginIndex: string, enabled: boolean): (boolean, string?)
+function utility.setPluginEnabled(pluginIndex: string, enabled: boolean)
 	local fileName = getPluginFileName(pluginIndex)
 	local filePath = utility.getPluginFilePath(pluginIndex)
 
 	if not filePath then
-		return false, `Failed to find file for '{pluginIndex}'`
+		error(`Failed to find file for '{pluginIndex}'`)
 	end
 
 	if enabled then
@@ -70,8 +70,6 @@ function utility.setPluginEnabled(pluginIndex: string, enabled: boolean): (boole
 	else
 		attemptMove(filePath, config.directories.disabledPlugins:join(fileName))
 	end
-
-	return true
 end
 
 -- https://github.com/ArvidSilverlock/Pilot.lua-Luau-LSP/blob/refactor/.lune/generate/modules/Utility.luau#L105

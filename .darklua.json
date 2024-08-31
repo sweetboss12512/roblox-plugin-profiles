@@ -11,5 +11,14 @@
                 "@src": "lune/"
             }
         }
-    }
+    },
+    "rules": [ 
+      "remove_comments",
+      "remove_nil_declaration",
+      "compute_expression",
+      "remove_unused_if_branch",
+      "filter_after_early_return",
+      "remove_empty_do",
+      "remove_types"
+    ]
 }

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+set -euxo pipefail
+
 mkdir -p build
-rm build/**
 
 darklua process lune/rbx-profile.luau build/out.luau
 

@@ -1,3 +1,6 @@
+# [config]
+# pluginsFolder = "/home/sweet/.var/app/org.vinegarhq.Vinegar/data/vinegar/prefixes/studio/drive_c/users/sweet/AppData/Local/Roblox/Plugins/"
+
 [plugins]
 jolemtools = 7555657789
 mbtools = 6724254977

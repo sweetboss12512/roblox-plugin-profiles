@@ -11,15 +11,15 @@ git clone https://github.com/sweetboss12512/roblox-plugin-profiles.git rbx-plugi
 cd rbx-plugin-profiles
 ./build.sh
 ```
-The executable will be in dist/rbx-profile.exe
+The executable will be in `build/rbx-profile.exe`
 
 Example profiles in `~/.config/rbx-profiles/profiles.toml`
 ```toml
 [plugins]
-jolemtools = 7555657789
+jolemtools = 7555657789 # Asset ID of the plugin you want to install.
 mbtools = 6724254977
 mbreflect = 11973409942
-rojo = "RojoManagedPlugin"
+rojo = "RojoManagedPlugin.rbxm" # File name of a local plugin, not installed by asset ID
 
 [profiles.default]
 enabled = [

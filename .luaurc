@@ -1,7 +1,7 @@
 {
     "languageMode": "strict",
     "aliases": {
-        "lune": "~/.lune/.typedefs/0.8.7/",
+        "lune": "~/.lune/.typedefs/0.8.8/",
         "vendor": "vendor/",
         "src": "lune"
     }

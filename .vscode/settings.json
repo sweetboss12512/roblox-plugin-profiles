@@ -2,7 +2,7 @@
   "luau-lsp.require.mode": "relativeToFile",
   "luau-lsp.sourcemap.enabled": false,
   "luau-lsp.require.directoryAliases": {
-    "@lune/": "~/.lune/.typedefs/0.8.7/",
+    "@lune/": "~/.lune/.typedefs/0.8.8/",
     "@vendor/": "vendor/",
     "@src/": "lune"
   }

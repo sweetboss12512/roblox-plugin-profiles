@@ -73,7 +73,7 @@ function utility.setPluginEnabled(pluginIndex: string, enabled: boolean)
 end
 
 -- https://github.com/ArvidSilverlock/Pilot.lua-Luau-LSP/blob/refactor/.lune/generate/modules/Utility.luau#L105
-function utility.parseArguments(arguments: { string }, ...: string)
+function utility.parseArguments(arguments: { string }, ...: string): ParsedArguments
 	local argumentedOptions = {}
 	for index = 1, select("#", ...) do
 		argumentedOptions[select(index, ...)] = true

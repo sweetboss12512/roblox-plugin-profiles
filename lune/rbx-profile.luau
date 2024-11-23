@@ -7,6 +7,7 @@ local commands = {
 	install = require("./commands/install"),
 	list = require("./commands/list"),
 	use = require("./commands/use"),
+	update = require("./commands/update"),
 }
 
 local parsedArguments = util.parseArguments(process.args)

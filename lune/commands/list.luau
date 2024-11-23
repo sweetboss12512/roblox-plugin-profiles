@@ -25,9 +25,9 @@ local function listPlugins()
 		local path = util.getPluginFilePath(pluginIndex)
 
 		if path then
-			print(`{pluginIndex} {path}`)
+			print(`- {pluginIndex} ({path})`)
 		else
-			print(`{pluginIndex} [{stdio.color("red")}Not Found{stdio.color("reset")}]`)
+			print(`- {pluginIndex} [{stdio.color("red")}Not Found{stdio.color("reset")}]`)
 		end
 	end
 end

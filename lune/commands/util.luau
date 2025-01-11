@@ -1,6 +1,6 @@
 local net = require("@lune/net")
 
-local pathfs = require("@vendor/lune-path")
+local pathfs = require("@pkg/lune-path")
 local config = require("@src/config")
 
 local utility = {}

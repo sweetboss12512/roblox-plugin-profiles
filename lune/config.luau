@@ -2,7 +2,7 @@ local serde = require("@lune/serde")
 local process = require("@lune/process")
 local stdio = require("@lune/stdio")
 
-local pathfs = require("@vendor/lune-path")
+local pathfs = require("@pkg/lune-path")
 
 local CONFIG_DIR: pathfs.Path
 local DATA_DIR: pathfs.Path

@@ -8,7 +8,8 @@
             "name": "path",
             "sources": {
                 "@vendor": "vendor/",
-                "@src": "lune/"
+                "@src": "lune/",
+                "@pkg": "lune_packages/"
             }
         }
     },

@@ -22,7 +22,7 @@ local function listPlugins()
     print("Plugins:")
 
     for pluginIndex in config.profileData.plugins do
-        local path = util.getPluginFilePath(pluginIndex)
+        local path = tostring(util.getPluginFilePath(pluginIndex)):gsub("\\", "/")
 
         if path then
             print(`- {pluginIndex} ({path})`)

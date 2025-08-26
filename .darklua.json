@@ -3,23 +3,15 @@
         "excludes": [
             "@lune/**"
         ],
-        "require_mode": {
-            "module_folder_name": "init",
-            "name": "path",
-            "sources": {
-                "@vendor": "vendor/",
-                "@src": "lune/",
-                "@pkg": "lune_packages/"
-            }
-        }
+        "require_mode": "luau"
     },
-    "rules": [ 
-      "remove_comments",
-      "remove_nil_declaration",
-      "compute_expression",
-      "remove_unused_if_branch",
-      "filter_after_early_return",
-      "remove_empty_do",
-      "remove_types"
+    "rules": [
+        "remove_comments",
+        "remove_nil_declaration",
+        "compute_expression",
+        "remove_unused_if_branch",
+        "filter_after_early_return",
+        "remove_empty_do",
+        "remove_types"
     ]
 }

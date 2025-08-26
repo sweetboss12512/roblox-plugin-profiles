@@ -1,9 +1,12 @@
 local net = require("@lune/net")
+local roblox = require("@lune/roblox")
 
 local pathfs = require("@vendor/lune-path")
 local config = require("@src/config")
 
 local utility = {}
+local AUTH_COOKIE = roblox.getAuthCookie()
+assert(AUTH_COOKIE ~= nil, "Failed to get roblox auth cookie")
 
 export type ParsedArguments = {
     arguments: { any },
@@ -122,6 +125,9 @@ function utility.installPlugin(assetId: number, fileName: string): (boolean, net
     local response = net.request({
         url = `https://assetdelivery.roblox.com/v1/asset/?id={assetId}`,
         method = "GET",
+        headers = {
+            Cookie = AUTH_COOKIE,
+        },
     })
 
     local outputPath = pathfs.Path.from(`{config.directories.disabledPlugins}/{fileName}.rbxm`)

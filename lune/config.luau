@@ -11,12 +11,16 @@ local CURRENT_DIRECTORY = pathfs.cwd
 
 if process.env["XDG_CONFIG_HOME"] then
     CONFIG_DIR = pathfs.Path.from(`{process.env["XDG_CONFIG_HOME"]}/{DIR_NAME}`)
+elseif process.os == "windows" then
+    CONFIG_DIR = pathfs.Path.from(`{process.env["HOME"]}/AppData/Local/rbx-profile`)
 else
     CONFIG_DIR = pathfs.Path.from(`{process.env["HOME"]}/.config/{DIR_NAME}`)
 end
 
 if process.env["XDG_DATA_HOME"] then
     DATA_DIR = pathfs.Path.from(`{process.env["XDG_DATA_HOME"]}/{DIR_NAME}`)
+elseif process.os == "windows" then
+    DATA_DIR = pathfs.Path.from(`{process.env["HOME"]}/AppData/Local/rbx-profile`)
 else
     DATA_DIR = pathfs.Path.from(`{process.env["HOME"]}/.local/share/{DIR_NAME}`)
 end

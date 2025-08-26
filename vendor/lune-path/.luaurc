@@ -1,0 +1,11 @@
+{
+  "aliases": {
+    "frktest": "lune_packages/.pesde/itsfrank+frktest/0.0.2/frktest/src/",
+    "lune": "~/.lune/.typedefs/0.8.9/",
+    "tests": "tests/"
+  },
+  "languageMode": "strict",
+  "lint": {
+    "LocalShadow": false
+  }
+}

@@ -4,7 +4,7 @@ local net = require("@lune/net")
 local util = require("./util")
 local config = require("@src/config")
 local Log = require("@vendor/log")
-local pathfs = require("@pkg/lune-path")
+local pathfs = require("@vendor/lune-path")
 
 local function updatePlugin(pluginName: string, forceUpdate: boolean)
     local assetId = config.profileData.plugins[pluginName]
